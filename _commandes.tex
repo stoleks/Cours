@@ -55,7 +55,7 @@
 \newcommand{\titreSousSection}[1]{
   \vspace*{12pt}
   \refstepcounter{sousSection}
-  \sousTitre{\arabic{subsubsection}.\arabic{sousSection} -- #1}
+  \sousTitre{\Alph{sousSection} -- #1}
   \vspace*{8pt}
 }
 %%%% fixe le numéro de l'activité
@@ -94,6 +94,8 @@
 \newcommand{\enTete}[2]{
   \pagestyle{fancy}
   \setcounter{section}{#2}
+  \setcounter{subsection}{0}
+  \setcounter{sousSection}{0}
   \teteGauche{Lycée Condorcet}{Chapitre \arabic{section} -- #1} % left header
   \chead{} % central header
   \teteDroite{2021 -- 2022}{Seconde}
@@ -135,9 +137,6 @@
   
   \vspace*{8pt}
   \reponse{#2}
-  \ifnum #2 > 0
-    \vspace*{-12pt}
-  \fi
 }
 % reponse
 \newcounter{int}
@@ -148,6 +147,9 @@
   \ifnum \value{int} < #1
   \lignePointillee{0.99} \\[8pt]
   \repeat
+  \ifnum #1 > 0
+    \vspace*{-12pt}
+  \fi
 }
 
 
@@ -196,7 +198,7 @@
 \newenvironment{objectifs}{
   \begin{objBoite}
     \begin{center}
-      \sousTitre{\Large Objectifs de la séance :}
+      \sousTitre{\large Objectifs de la séance :}
       \begin{listeObjectifs}
 }
 { 
@@ -236,10 +238,11 @@
   \endtabularx
 }
 
+
 %%%% Espace pour une appréciation
 \newcommand{\appreciation}{
   \vspace*{8pt}
-  \sousTitre{\large Appréciation}
+  \sousTitre{\large Appréciation et remarques}
   \vspace*{-4pt}
   \begin{boite}
     \vspace{100pt}
@@ -334,7 +337,7 @@
 \setlist[listeObjectifs]{label=\chevron}
 
 
-%%%% unité, degré
+%%%% unité, degré, vecteur, etc.
 \newcommand{\unit}[1]{
   \; \mathrm{#1}
 }
