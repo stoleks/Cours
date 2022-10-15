@@ -3,6 +3,17 @@
 \definecolor{darkcyan}{rgb}{0.0, 0.55, 0.50}
 
 
+%%%% rectangle coloré
+\newcommand\rectangle[3]{%
+  \shorthandoff{;}
+  \tikz \node (rect) [draw, fill, color=#1,
+              minimum width=#2,
+              minimum height=#3] {};
+  \shorthandon{;}
+}
+\newcommand\rectangleCyan[2]{\rectangle{darkcyan}{#1}{#2}}
+
+
 %%%% pagination et sections
 \newcommand{\titre}[1]{
   \begin{center}
@@ -41,6 +52,7 @@
 \newcommand{\titrePartie}[1]{
   \vspace*{24pt}
   \refstepcounter{subsection}
+  \rectangleCyan{60pt}{12pt}
   \sousTitre{\Large \Roman{subsection} -- #1}
   \vspace*{10pt}
 }
@@ -49,6 +61,7 @@
   \vspace*{16pt}
   \refstepcounter{subsubsection}
   \setcounter{sousSection}{0}
+  \rectangleCyan{30pt}{4pt}
   \sousTitre{\large \arabic{subsubsection} -- #1}
   \vspace*{10pt}
 }
@@ -308,7 +321,7 @@
 }
 %
 \newcommand{\important}[1]{
-  \!\textcolor{darkgreen}{\textsf{\bfseries #1}}\!
+  \!\textcolor{darkgreen}{\textsf{\bfseries #1}}\!\!
 }
 %
 \newcommand{\exemple}[1]{
