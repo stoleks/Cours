@@ -1,0 +1,395 @@
+%%%% couleurs
+\definecolor{darkgreen}{rgb}{0.0, 0.40, 0.20}
+\definecolor{darkcyan}{rgb}{0.0, 0.55, 0.50}
+
+
+%%%% pagination et sections
+\newcommand{\titre}[1]{
+  \begin{center}
+    \textsf{\bfseries \Large #1}
+  \end{center}
+}
+\newcommand{\sousTitre}[1]{
+  \textsf{\bfseries #1}
+}
+\newcommand{\pasDePagination}{
+  \thispagestyle{empty}
+}
+
+
+%%%% activité ou TP
+\newcounter{acti}
+\newcommand{\titreActi}[2]{
+  \refstepcounter{acti}
+  \titre{#1 \arabic{acti} : #2}
+}
+\newcommand{\titreTP}[1]{
+  \titreActi{TP}{#1}
+}
+\newcommand{\titreActivite}[1]{
+  \titreActi{Activité}{#1}
+}
+\newcommand{\titreEvaluation}[1]{
+  \titreActi{Évaluation}{#1}
+}
+
+
+%%%% chapitre, section et sous-section
+\newcommand{\titreChapitre}[1]{
+  \titre{Chapitre \arabic{section} : #1}
+}
+\newcommand{\titrePartie}[1]{
+  \vspace*{24pt}
+  \refstepcounter{subsection}
+  \sousTitre{\Large \Roman{subsection} -- #1}
+  \vspace*{10pt}
+}
+\newcounter{sousSection}
+\newcommand{\titreSection}[1]{
+  \vspace*{16pt}
+  \refstepcounter{subsubsection}
+  \setcounter{sousSection}{0}
+  \sousTitre{\large \arabic{subsubsection} -- #1}
+  \vspace*{10pt}
+}
+\newcommand{\titreSousSection}[1]{
+  \vspace*{12pt}
+  \refstepcounter{sousSection}
+  \sousTitre{\arabic{subsubsection}.\arabic{sousSection} -- #1}
+  \vspace*{8pt}
+}
+%%%% fixe le numéro de l'activité
+\newcommand{\numeroActivite}[1]{
+  \setcounter{exercice}{0}
+  \setcounter{subsection}{0}
+  \setcounter{figure}{0}
+  \setcounter{acti}{#1 - 1}
+}
+
+
+%%%% lignes
+\newcommand{\ligne}{
+  \par\noindent\rule{\textwidth}{0.4pt}
+}
+\newcommand{\lignePointillee}[1]{
+  \makebox[#1\textwidth]{\dotfill}
+}
+
+
+%%%% en-tête
+\newcommand{\teteGauche}[2]{
+  \lhead{
+    \textbf{\footnotesize #1}
+    \newline
+    \footnotesize #2
+  }
+}
+\newcommand{\teteDroite}[2]{
+  \rhead{
+    \hfill \textbf{\footnotesize #1}
+    \newline \hfill
+    \footnotesize #2
+  }
+}
+\newcommand{\enTete}[2]{
+  \pagestyle{fancy}
+  \setcounter{section}{#2}
+  \teteGauche{Lycée Condorcet}{Chapitre \arabic{section} -- #1} % left header
+  \chead{} % central header
+  \teteDroite{2021 -- 2022}{Seconde}
+}
+%
+\newcommand{\enTeteFicheReussite}{
+  \newpage
+  \setcounter{subsection}{0}
+  \pasDePagination
+  
+  \phantom{b}
+  \vspace*{-60pt}
+  \titre{Fiche \og Réussir son évaluation \fg}
+  
+  \titrePartie{Ce que je dois savoir}
+  
+  Pour savoir quoi réviser, je lis les points clés du chapitre évalués :
+  \begin{itemize}
+    \item Si je pense maîtriser une notion, je coche la case \ok
+    \item Si je pense que je dois la retravailler, je coche la case \pasOk
+  \end{itemize}
+  
+  Pour travailler les notions qui ne sont pas maîtrisées, je reprend les activités associés.
+}
+\newcommand{\basDePageFicheReussite}{
+  \titrePartie{Ce qu'il me reste à faire}
+  
+  Pour être sûr-e d'obtenir une bonne note, je m'entraîne avec les exercices corrigés du manuel indiqués dans la colonne de droite.
+}
+
+
+%%%% exercice
+\newcounter{exercice}
+\newcommand{\exo}[2]{
+  \refstepcounter{exercice}
+  \hspace{24pt}
+  \textbf{\arabic{exercice} --}
+  #1
+  
+  \vspace*{8pt}
+  \reponse{#2}
+  \ifnum #2 > 0
+    \vspace*{-12pt}
+  \fi
+}
+% reponse
+\newcounter{int}
+\newcommand{\reponse}[1]{
+  \setcounter{int}{-1}
+  \loop
+  \stepcounter{int}
+  \ifnum \value{int} < #1
+  \lignePointillee{0.99} \\[8pt]
+  \repeat
+}
+
+
+%%%% simple boite
+\newenvironment{boite}{
+  \begin{tcolorbox}
+  [ breakable, enhanced jigsaw, % to break box over page
+    arc = 0mm, % straight line
+    colback= white, % white background
+    colframe= black % dark frame
+  ]
+}
+{ \end{tcolorbox} }
+
+
+%%%% documents
+\newcounter{document}
+\newcommand{\titreDocu}[1]{
+  \refstepcounter{document} % update counter
+  \textbf{Document \arabic{document} -- #1} % print document title
+  \addcontentsline{toc}{document}{\protect\numberline{} #1} % update table of content
+}
+\newenvironment{doc}[1]{
+  \begin{boite}
+    \titreDocu {#1} \newline
+}
+{ \end{boite} }
+
+
+%%%% objectifs
+\newenvironment{objBoite}{
+  \begin{tcolorbox}
+  [boxrule = 0pt,
+  frame hidden, sharp corners,
+  colback = white, enhanced,
+  borderline north={2pt}{0pt}{darkcyan},
+  borderline south={2pt}{0pt}{darkcyan},
+  borderline west={4pt}{0pt}{darkcyan},
+  borderline east={4pt}{0pt}{darkcyan}
+  ]
+  
+}
+{
+  \end{tcolorbox}
+}
+\newenvironment{objectifs}{
+  \begin{objBoite}
+    \begin{center}
+      \sousTitre{\Large Objectifs de la séance :}
+      \begin{listeObjectifs}
+}
+{ 
+      \end{listeObjectifs}
+    \end{center}
+  \end{objBoite}
+}
+
+
+%%%% Tableau de competence
+\newenvironment{tableauCompetences}{
+  \centering
+  \setlength{\extrarowheight}{6pt}
+  \tabularx{\linewidth}{| c | X | c | c | c | c |}
+    \hline
+    \rowcolor{gray!20}
+    \centering \textbf{Compétences} & \centering \textbf{Items} & \textbf{D} & \textbf{C} & \textbf{B} & \textbf{A}
+    \\ \hline
+}
+{
+    \\ \hline
+  \endtabularx
+}
+
+%%%% Tableau de connaissances
+\newenvironment{tableauConnaissances}{
+  \centering
+  \setlength{\extrarowheight}{6pt}
+  \tabularx{\linewidth}{| X | c | c | c | c |}
+    \hline
+    \rowcolor{gray!20} 
+    \textbf{Points clés du chapitre} & \ok & \pasOk & \textbf{En classe} & \textbf{Exercices}
+    \\ \hline
+}
+{   
+    \\ \hline
+  \endtabularx
+}
+
+%%%% Espace pour une appréciation
+\newcommand{\appreciation}{
+  \vspace*{8pt}
+  \sousTitre{\large Appréciation}
+  \vspace*{-4pt}
+  \begin{boite}
+    \vspace{100pt}
+    \phantom{b}
+  \end{boite}
+}
+
+
+%%%% symboles : chevron, flèche, attention, etc.
+\newcommand{\chevron}{
+  \textcolor{darkcyan}{\faChevronRight}
+}
+%
+\newcommand{\fleche}{
+  \textcolor{darkcyan}{\faCaretRight}
+}
+%
+\newcommand{\attention}{
+  \textcolor{darkcyan}{\faExclamationTriangle}
+}
+%
+\newcommand{\flecheLongue}{
+  \textcolor{darkcyan}{\faLongArrowRight}
+}
+%
+\newcommand{\ok}{
+  \textcolor{darkcyan}{\faCheckCircle}
+}
+%
+\newcommand{\pasOk}{
+  \textcolor{darkcyan}{\faTimesCircle}
+}
+
+
+%%%% problematique
+\newcommand{\problematique}[1]{
+  {
+    \large
+    \fleche
+    \emphase{Problématique :} \newline
+    \textbf{#1}
+  }
+}
+
+
+%%%% Passage important
+\newenvironment{encart}{
+  \begin{tcolorbox}
+  [boxrule = 0pt,
+  frame hidden, sharp corners,
+  colback = white,
+  enhanced, borderline west={4pt}{0pt}{darkcyan}]
+  
+}
+{
+  \end{tcolorbox}
+}
+
+
+%%%% emphase
+\newcommand{\emphase}[1]{
+  \textcolor{darkcyan}{\textsf{\bfseries \large #1}}
+}
+%
+\newcommand{\important}[1]{
+  \!\textcolor{darkgreen}{\textsf{\bfseries #1}}\!
+}
+%
+\newcommand{\exemple}[1]{
+  \flecheLongue \textit{#1}
+}
+%
+\newcommand{\note}{
+  \textbf{Note :}
+}
+%
+\newcounter{appelProf}
+\newcommand{\appelProf}{
+  \refstepcounter{appelProf}
+  \hspace{24pt} \faHandPaperO \hspace{2pt}
+  \textbf{Appel n$^\circ$ \arabic{appelProf} :}
+}
+
+
+%%%% qcm
+\newlist{qcm}{itemize}{2}
+\setlist[qcm]{label=$\square$, leftmargin=2cm}
+
+
+%%%% liste d'objectif
+\newlist{listeObjectifs}{itemize}{2}
+\setlist[listeObjectifs]{label=\chevron}
+
+
+%%%% unité, degré
+\newcommand{\unit}[1]{
+  \; \mathrm{#1}
+}
+\newcommand{\degree}{
+  ^\circ\!
+}
+\newcommand{\Frac}[2]{
+  \displaystyle \frac{#1}{#2}
+}
+\newcommand{\Tfus}{
+  T_{\text{f}}
+}
+\newcommand{\Teb}{
+  T_{\text{éb}}
+}
+
+
+%%%% Séparation de la page
+\newcommand{\separationTroisBlocs}[3]{
+  \begin{minipage}[t]{0.3\linewidth}
+    #1
+  \end{minipage}
+  ~
+  \begin{minipage}[t]{0.3\linewidth}
+    #2
+  \end{minipage}
+  ~
+  \begin{minipage}[t]{0.3\linewidth}
+    #3
+  \end{minipage}
+}
+%%%%
+\newcommand{\separationDeuxBlocs}[2]{
+  \begin{minipage}[t]{0.48\linewidth}
+    #1
+  \end{minipage}
+  ~
+  \begin{minipage}[t]{0.48\linewidth}
+    #2
+  \end{minipage}
+}
+
+
+%%%% Espace pour indiquer nom, prénom et classe
+\newcommand{\nomPrenomClasse}{
+  \vspace*{-24pt}
+  Nom : \lignePointillee{0.3}
+  Prénom : \lignePointillee{0.3}
+  Classe : \dotfill
+}
+
+
+%%%%
+\newcommand{\competence}[1]{
+  {\footnotesize
+    \textit{(#1)}
+  }
+}
