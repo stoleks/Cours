@@ -52,8 +52,9 @@
 \newcommand{\titrePartie}[1]{
   \vspace*{24pt}
   \refstepcounter{subsection}
-  \rectangleCyan{60pt}{12pt}
+  \rectangleCyan{60pt}{1pt}
   \sousTitre{\Large \Roman{subsection} -- #1}
+  \rectangleCyan{60pt}{1pt}
   \vspace*{10pt}
 }
 \newcounter{sousSection}
@@ -111,7 +112,7 @@
   \setcounter{sousSection}{0}
   \teteGauche{Lycée Condorcet}{Chapitre \arabic{section} -- #1} % left header
   \chead{} % central header
-  \teteDroite{2021 -- 2022}{Seconde}
+  \teteDroite{2022 -- 2023}{Seconde}
 }
 %
 \newcommand{\enTeteFicheReussite}{
@@ -292,12 +293,9 @@
 
 %%%% problematique
 \newcommand{\problematique}[1]{
-  {
-    \large
-    \fleche
-    \emphase{Problématique :} \newline
-    \textbf{#1}
-  }
+  \fleche
+  \emphase{Problématique :} 
+  \textbf{#1}
 }
 
 
@@ -312,6 +310,12 @@
 }
 {
   \end{tcolorbox}
+}
+
+
+%%%% image
+\newcommand{\image}[2]{
+  \includegraphics[width=#1\linewidth]{#2}
 }
 
 
@@ -347,7 +351,12 @@
 
 %%%% liste d'objectif
 \newlist{listeObjectifs}{itemize}{2}
-\setlist[listeObjectifs]{label=\chevron}
+\setlist[listeObjectifs]{label={\small \chevron}}
+
+
+%%%% liste de points
+\newlist{listePoints}{itemize}{2}
+\setlist[listePoints]{label=\textcolor{darkcyan}{\textbullet}}
 
 
 %%%% unité, degré, vecteur, etc.
