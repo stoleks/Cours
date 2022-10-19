@@ -252,14 +252,51 @@
   \endtabularx
 }
 
+%%%% Tableau de correction élève
+\newcommand{\correctionEleve}{
+  \setlength{\extrarowheight}{6pt}
+  \begin{tabularx}{\linewidth}{| X | m{0.26\textwidth} | m{0.26\textwidth} | m{0.26\textwidth} |}
+    \hline
+    \rowcolor{gray!20} 
+    \centering \textbf{Question} &
+    \centering \textbf{L'erreur} &
+    \centering \textbf{Analyse de l'erreur} &
+    \phantom{Bla} \textbf{La correction}
+    \\ \hline
+    %
+    \phantom{b} \newline
+    & & & \\ \hline
+    \phantom{b} \newline
+    & & & \\ \hline
+    \phantom{b} \newline
+    & & & \\ \hline
+    \phantom{b} \newline
+    & & & \\ \hline
+  \end{tabularx}
+}
+
+%%%% Tableau bilan de la correction
+\newcommand{\bilanCorrection}{
+  \setlength{\extrarowheight}{6pt}
+  \begin{tabularx}{\linewidth}{| X | X |}
+    \hline
+    \rowcolor{gray!20}
+    \textbf{Ce que je n'avais pas compris...} &
+    \textbf{Ce que maintenant j'ai compris...}
+    \\ \hline
+    \phantom{b} \newline \newline \newline \newline
+    & \\ \hline
+  \end{tabularx}
+}
+
 
 %%%% Espace pour une appréciation
-\newcommand{\appreciation}{
+\newcommand{\appreciation}[1]{
   \vspace*{8pt}
-  \sousTitre{\large Appréciation et remarques}
+  \sousTitre{Appréciation et remarques}
   \vspace*{-4pt}
   \begin{boite}
-    \vspace{100pt}
+    \vspace{#1 pt}
     \phantom{b}
   \end{boite}
 }
