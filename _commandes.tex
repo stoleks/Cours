@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% couleurs
-\definecolor{darkgreen}{rgb}{0.0, 0.40, 0.20}
+\definecolor{darkgreen}{rgb}{0.0, 0.40, 0.10}
 \definecolor{darkcyan}{rgb}{0.0, 0.55, 0.50}
 
 
@@ -350,7 +350,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% symboles : chevron, flèche, attention, etc.
 \newcommand{\chevron}{
-  \textcolor{darkcyan}{\faChevronRight}
+  \textcolor{darkcyan}{\small \faChevronRight}
 }
 %
 \newcommand{\fleche}{
@@ -380,8 +380,9 @@
   \begin{tcolorbox}
   [boxrule = 0pt,
   frame hidden, sharp corners,
-  colback = white,
-  enhanced, borderline west={4pt}{0pt}{darkcyan}]
+  colback = white!95!darkcyan, % background color
+  breakable, enhanced jigsaw, % to break box over page
+  borderline west={4pt}{0pt}{darkcyan}] % left bar
   
 }
 {
@@ -428,12 +429,17 @@
 
 %%%% liste d'objectif
 \newlist{listeObjectifs}{itemize}{2}
-\setlist[listeObjectifs]{label={\small \chevron}}
+\setlist[listeObjectifs]{label=\chevron}
 
 
 %%%% liste de points
 \newlist{listePoints}{itemize}{2}
 \setlist[listePoints]{label=\textcolor{darkcyan}{\textbullet}}
+
+
+%%%% liste de points
+\newlist{enumeration}{enumerate}{2}
+\setlist[enumeration]{label = \textcolor{darkcyan!75!black}{\textbf{\arabic*.}} }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -463,6 +469,33 @@
 }
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% tikz macros
+\newcommand{\tkzPoint}[2]{
+  \filldraw (#1, #2) circle (2pt);
+}
+\newcommand{\tkzPointLabel}[3]{
+  \filldraw (#1, #2) circle (2pt) node[above] {#3};
+}
+\newcommand{\tkzVector}[6]{
+  \draw[#1, ->, very thick] (#2, #3) -- (#4, #5) node[above] {#6};
+}
+\newcommand{\tkzVectorX}[4]{
+  \draw[black, ->, very thick] (#1, #2) -- (#1 + #3, #2) node[above] {#4};
+}
+\newcommand{\tkzVectorY}[4]{
+  \draw[black, ->, very thick] (#1, #2) -- (#1, #2 + #3) node[right] {#4};
+}
+\newcommand{\tkzArrowY}[5]{
+  \draw[#1, <->, thick] (#2, #3) -- (#2, #3 + #4);
+  \draw[#1] (#2, #3 + #4/2) node[right] {#5};
+}
+\newcommand{\tkzArrowX}[5]{
+  \draw[#1, <->, thick] (#2, #3) -- (#2 + #4, #3);
+  \draw[#1] (#2 + #4/2, #3) node[below] {#5};
+}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% unité, degré, vecteur, etc.
 \newcommand{\unit}[1]{
@@ -479,4 +512,16 @@
 }
 \newcommand{\Teb}{
   T_{\text{éb}}
+}
+\newcommand{\FBsurA}{
+  F_{B/A}
+}
+\newcommand{\FAsurB}{
+  F_{A/B}
+}
+\newcommand{\vvFAsurB}{
+  \vv{F}_{A/B}
+}
+\newcommand{\vvFBsurA}{
+  \vv{F}_{B/A}
 }
