@@ -1,3 +1,4 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% couleurs
 \definecolor{darkgreen}{rgb}{0.0, 0.40, 0.20}
 \definecolor{darkcyan}{rgb}{0.0, 0.55, 0.50}
@@ -13,7 +14,19 @@
 }
 \newcommand\rectangleCyan[2]{\rectangle{darkcyan}{#1}{#2}}
 
+%%%% simple boite
+\newenvironment{boite}{
+  \begin{tcolorbox}
+  [ breakable, enhanced jigsaw, % to break box over page
+    arc = 0mm, % straight line
+    colback= white, % white background
+    colframe= black % dark frame
+  ]
+}
+{ \end{tcolorbox} }
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% pagination et sections
 \newcommand{\titre}[1]{
   \begin{center}
@@ -72,6 +85,7 @@
   \sousTitre{\Alph{sousSection} -- #1}
   \vspace*{8pt}
 }
+
 %%%% fixe le numéro de l'activité
 \newcommand{\numeroActivite}[1]{
   \setcounter{exercice}{0}
@@ -90,6 +104,7 @@
 }
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% en-tête
 \newcommand{\teteGauche}[2]{
   \lhead{
@@ -142,6 +157,7 @@
 }
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% exercice
 \newcounter{exercice}
 \newcommand{\exo}[2]{
@@ -167,7 +183,8 @@
   \fi
 }
 
-%%%%
+
+%%%% correction
 \newcommand{\correction}[1]{
   \vspace*{-6pt}
   \hspace{24pt} \fleche \textit{#1}
@@ -175,18 +192,24 @@
 }
 
 
-%%%% simple boite
-\newenvironment{boite}{
-  \begin{tcolorbox}
-  [ breakable, enhanced jigsaw, % to break box over page
-    arc = 0mm, % straight line
-    colback= white, % white background
-    colframe= black % dark frame
-  ]
+%%%%
+\newcommand{\competence}[1]{
+  {\footnotesize
+    \textit{(#1)}
+  }
 }
-{ \end{tcolorbox} }
 
 
+%%%% Espace pour indiquer nom, prénom et classe
+\newcommand{\nomPrenomClasse}{
+  \vspace*{-24pt}
+  Nom : \lignePointillee{0.3}
+  Prénom : \lignePointillee{0.3}
+  Classe : \dotfill
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% documents
 \newcounter{document}
 \newcommand{\titreDocu}[1]{
@@ -200,9 +223,17 @@
 }
 { \end{boite} }
 
-%%
+%% pour les référencer
 \newcommand{\docu}[1]{
   \textbf{(Doc. #1)}
+}
+
+
+%%%% problematique
+\newcommand{\problematique}[1]{
+  \fleche
+  \emphase{Problématique :} 
+  \textbf{#1}
 }
 
 
@@ -235,6 +266,19 @@
 }
 
 
+%%%% Espace pour une appréciation
+\newcommand{\appreciation}[1]{
+  \vspace*{8pt}
+  \sousTitre{Appréciation et remarques}
+  \vspace*{-4pt}
+  \begin{boite}
+    \vspace{#1 pt}
+    \phantom{b}
+  \end{boite}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Tableau de competence
 \newenvironment{tableauCompetences}{
   \centering
@@ -303,18 +347,7 @@
 }
 
 
-%%%% Espace pour une appréciation
-\newcommand{\appreciation}[1]{
-  \vspace*{8pt}
-  \sousTitre{Appréciation et remarques}
-  \vspace*{-4pt}
-  \begin{boite}
-    \vspace{#1 pt}
-    \phantom{b}
-  \end{boite}
-}
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% symboles : chevron, flèche, attention, etc.
 \newcommand{\chevron}{
   \textcolor{darkcyan}{\faChevronRight}
@@ -341,14 +374,7 @@
 }
 
 
-%%%% problematique
-\newcommand{\problematique}[1]{
-  \fleche
-  \emphase{Problématique :} 
-  \textbf{#1}
-}
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Passage important
 \newenvironment{encart}{
   \begin{tcolorbox}
@@ -360,12 +386,6 @@
 }
 {
   \end{tcolorbox}
-}
-
-
-%%%% image
-\newcommand{\image}[2]{
-  \includegraphics[width=#1\linewidth]{#2}
 }
 
 
@@ -394,6 +414,13 @@
 }
 
 
+%%%% image
+\newcommand{\image}[2]{
+  \includegraphics[width=#1\linewidth]{#2}
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% qcm
 \newlist{qcm}{itemize}{2}
 \setlist[qcm]{label=$\square$, leftmargin=2cm}
@@ -409,24 +436,7 @@
 \setlist[listePoints]{label=\textcolor{darkcyan}{\textbullet}}
 
 
-%%%% unité, degré, vecteur, etc.
-\newcommand{\unit}[1]{
-  \; \mathrm{#1}
-}
-\newcommand{\degree}{
-  ^\circ\!
-}
-\newcommand{\Frac}[2]{
-  \displaystyle \frac{#1}{#2}
-}
-\newcommand{\Tfus}{
-  T_{\text{f}}
-}
-\newcommand{\Teb}{
-  T_{\text{éb}}
-}
-
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% Séparation de la page
 \newcommand{\separationTroisBlocs}[3]{
   \begin{minipage}[t]{0.3\linewidth}
@@ -453,18 +463,20 @@
 }
 
 
-%%%% Espace pour indiquer nom, prénom et classe
-\newcommand{\nomPrenomClasse}{
-  \vspace*{-24pt}
-  Nom : \lignePointillee{0.3}
-  Prénom : \lignePointillee{0.3}
-  Classe : \dotfill
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% unité, degré, vecteur, etc.
+\newcommand{\unit}[1]{
+  \; \mathrm{#1}
 }
-
-
-%%%%
-\newcommand{\competence}[1]{
-  {\footnotesize
-    \textit{(#1)}
-  }
+\newcommand{\degree}{
+  ^\circ\!
+}
+\newcommand{\Frac}[2]{
+  \displaystyle \frac{#1}{#2}
+}
+\newcommand{\Tfus}{
+  T_{\text{f}}
+}
+\newcommand{\Teb}{
+  T_{\text{éb}}
 }
