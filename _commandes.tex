@@ -121,9 +121,10 @@
   \pasDePagination
   
   \phantom{b}
-  \vspace*{-60pt}
+  \vspace*{-70pt}
   \titre{Fiche \og Réussir son évaluation \fg}
   
+  \vspace*{-20pt}
   \titrePartie{Ce que je dois savoir}
   
   Pour savoir quoi réviser, je lis les points clés du chapitre évalués :
@@ -166,6 +167,13 @@
   \fi
 }
 
+%%%%
+\newcommand{\correction}[1]{
+  \vspace*{-6pt}
+  \hspace{24pt} \fleche \textit{#1}
+  \vspace*{8pt}
+}
+
 
 %%%% simple boite
 \newenvironment{boite}{
@@ -191,6 +199,11 @@
     \titreDocu {#1} \newline
 }
 { \end{boite} }
+
+%%
+\newcommand{\docu}[1]{
+  \textbf{(Doc. #1)}
+}
 
 
 %%%% objectifs
@@ -241,7 +254,7 @@
 \newenvironment{tableauConnaissances}{
   \centering
   \setlength{\extrarowheight}{6pt}
-  \tabularx{\linewidth}{| X | c | c | c | c |}
+  \tabularx{\linewidth}{| X | c | c | m{0.15\linewidth} | m{0.15\linewidth} |}
     \hline
     \rowcolor{gray!20} 
     \textbf{Points clés du chapitre} & \ok & \pasOk & \textbf{En classe} & \textbf{Exercices}
