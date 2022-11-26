@@ -180,6 +180,14 @@
   \vspace*{8pt}
   \reponse{#2}
 }
+% sous questions
+\newcommand{\sousQuestion}[2]{
+  \hspace{15pt}
+  \textcolor{darkcyan!75!black}{\textbullet} #1
+  
+  \vspace*{8pt}
+  \reponse{#2}
+}
 % reponse
 \newcounter{int}
 \newcommand{\reponse}[1]{
@@ -552,10 +560,9 @@
   \filldraw [fill=white, draw=black, ultra thick] (#1, #2) rectangle (#1 + #3, #2 + #4);
   \node at (#1 + #3/2, #2 + #4/2) [font=\sffamily] {\textbf{\large #5}};
 }
+% classe
 \newcommand{\place}[3]{
   \rectangleTexte{#1}{#2}{3}{2}{#3}
-  % \filldraw [fill=white, draw=black, ultra thick] (#1, #2) rectangle (#1 + 3, #2 + 2);
-  % \node at (#1 + 1.5, #2 + 1) [font=\sffamily] {\textbf{\large #3}};
 }
 \newcommand{\deuxPlaces}[4]{
   \place{#1}{#2}{#3}
@@ -581,6 +588,16 @@
   \deuxPlaces  {0}{#1} {#2}{#3}
   \quatrePlaces{7}{#1} {#4}{#5}{#6}{#7}
   \deuxPlaces  {20}{#1}{#8}{#9}
+}
+% TP
+\newcommand{\paillasse}[3]{
+  \rectangleTexte{#1}{#2}{4}{2}{#3}
+}
+\newcommand{\rangPaillasse}[6]{
+  \paillasse{#1}{#2}     {#3}
+  \paillasse{#1 + 4}{#2} {#4}
+  \paillasse{#1 + 12}{#2} {#5}
+  \paillasse{#1 + 16}{#2}{#6}
 }
 
 
