@@ -4,7 +4,7 @@
 \usepackage[utf8]{inputenc}
 
 %%%% useful packages
-\usepackage[a4paper, left=1.2cm, right=1.2cm, top=2.2cm, bottom=2.3cm]{geometry}
+\usepackage[a4paper, left=1.3cm, right=1.3cm, top=2.2cm, bottom=2.3cm]{geometry}
 \usepackage{subcaption} % for figure caption
 \usepackage{graphicx} % image
 \usepackage{tabularx} % table
@@ -20,7 +20,7 @@
 \usepackage[european, straightvoltages, RPvoltages]{circuitikz} % for electronic circuit
 \usepackage{multicol} % to use several columns
 \usepackage{fontawesome} % awesome icons
-\usepackage{ifthen} % for loop
+\usepackage{ifthen} % for loop and boolean in commands
 \usepackage{pdfpages} % to include pdf
 \usepackage{wrapfig} % to wrap text around figures
 \usepackage{chemfig} % to draw chemistry formula
@@ -29,6 +29,7 @@
 \usepackage{physics} % for derivatives, braket, etc.
 \usepackage{esvect} % for large vectors
 \usepackage{listings} % for code
+\usepackage{dashundergaps} % for automatic text to fill
 % dyslexia friendly font (need to be compiled in xetex)
 %\usepackage{fontspec}
 %\setmainfont{OpenDyslexic}
@@ -39,6 +40,9 @@
 \setlength{\parindent}{0cm}
 \renewcommand{\baselinestretch}{1}
 \setcounter{tocdepth}{2}
+
+
+%%%% tikz configuration
 \usetikzlibrary{babel}
 \tikzset{>=latex}
 
@@ -48,9 +52,23 @@
 \setlength{\headheight}{22.50113pt}
 
 
+%%%% Table
+\renewcommand{\tabularxcolumn}[1]{m{#1}}
+\setlength{\extrarowheight}{8pt}
+
+
 %%%% Chemfig configuration
 \setchemfig{
   atom sep=20pt,
   bond style={line width=1pt},
   angle increment=30
+}
+
+
+%%%% dashundergaps configuration
+\dashundergapssetup{
+  gap-numbers = false,
+  gap-format = dot,
+  gap-widen,
+  gap-extend-percent
 }

@@ -1,10 +1,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% couleurs
-\definecolor{darkgreen}{rgb}{0.0, 0.40, 0.10}
-\definecolor{darkcyan}{rgb}{0.0, 0.55, 0.50}
-\definecolor{darkred}{RGB}{148, 31, 0}
-\definecolor{brightyellow}{RGB}{238, 193, 0}
-\definecolor{brightred}{RGB}{224, 39, 34}
+%%%% quelque couleurs
+\definecolor{vertSombre} {RGB}{  0,  92,  46}
+\definecolor{cyanSombre} {RGB}{  0, 140, 128}
+\definecolor{jauneSombre}{RGB}{138, 103,   0}
+\definecolor{jauneClair} {RGB}{218, 173,   0}
+\definecolor{rougeSombre}{RGB}{148,  31,   0}
+\definecolor{rougeClair} {RGB}{224,  39,  34}
+
+%%% quelques couleurs dérivées des couleurs choisie
+\newcommand{\couleurCorrection}{couleurPrincipale!60!black}
+\newcommand{\couleurExercice}{couleurPrincipale!75!black}
 
 %%%% rectangle coloré
 \newcommand\rectangle[3]{%
@@ -14,7 +19,7 @@
               minimum height=#3] {};
   \shorthandon{;}
 }
-\newcommand\rectangleCyan[2]{\rectangle{darkcyan}{#1}{#2}}
+\newcommand\rectangleCyan[2]{\rectangle{couleurPrincipale}{#1}{#2}}
 
 %%%% simple boite
 \newenvironment{boite}{
@@ -41,16 +46,22 @@
 \newcommand{\pasDePagination}{
   \thispagestyle{empty}
 }
+\newcommand{\feuilleBlanche}{
+  \newpage
+  \phantom{b}
+  \pasDePagination
+}
 
 
 %%%% activité ou TP
 \newcounter{acti}
 \newcommand{\titreActi}[2]{
   \refstepcounter{acti}
-  \titre{#1 \arabic{acti} : #2}
+  \titre{#1 \arabic{section}.\arabic{acti} -- #2}
 }
 \newcommand{\titreTP}[1]{
   \titreActi{TP}{#1}
+  %\titreActi{Activité expérimentale}{#1}
 }
 \newcommand{\titreActivite}[1]{
   \titreActi{Activité}{#1}
@@ -96,7 +107,9 @@
   \setcounter{figure}{0}
   \setcounter{document}{0}
   \setcounter{exercice}{0}
+  \setcounter{QCM}{0}
   \setcounter{acti}{#1 - 1}
+  \setcounter{page}{1}
 }
 % fixe le numéro de page (#2) et de partie (#1)
 \newcommand{\numeroPartieCours}[2]{
@@ -140,7 +153,7 @@
   \teteDroite{2022 -- 2023}{Seconde}
 }
 %
-\newcommand{\enTeteFicheReussite}{
+\newcommand{\enTeteFicheReussite}[1]{
   \newpage
   \setcounter{subsection}{0}
   \pasDePagination
@@ -148,9 +161,10 @@
   \phantom{b}
   \vspace*{-70pt}
   \titre{Fiche \og Réussir son évaluation \fg}
+  \titre{#1}
   
-  \vspace*{-20pt}
-  \titrePartie{Ce que je dois savoir}
+  \vspace*{-6pt}
+  % \titreSection{Ce que je dois savoir}
   
   Pour savoir quoi réviser, je lis les points clés du chapitre évalués :
   \begin{itemize}
@@ -161,61 +175,114 @@
   Pour travailler les notions qui ne sont pas maîtrisées, je reprend les activités associés.
 }
 \newcommand{\basDePageFicheReussite}{
-  \titrePartie{Ce qu'il me reste à faire}
-  
+  \titreSection{Ce qu'il me reste à faire}
+}
+\newcommand{\travailExerciceCorrige}{
   Pour être sûr-e d'obtenir une bonne note, je m'entraîne avec les exercices corrigés du manuel indiqués dans la colonne de droite.
+}
+\newcommand{\questionFicheReussite}[1]{
+  S'il me reste des questions, je les note ici pour les poser au début de l'évaluation :\\[4pt]
+  \lignesReponse{#1}
+}
+\newcommand{\coursFicheReussite}{
+  Je prépare une fiche au format A4 avec toutes les notions, définitions ou grandeurs dont je pense avoir besoin pendant l'évaluation.
 }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% exercice
+% définit un booléen pour entrer ou sortir du mode correction
+\newboolean{modeProf}
+\setboolean{modeProf}{false}
+\newcommand{\modeCorrection}{
+  \setboolean{modeProf}{true}
+  \TeacherModeOn
+}
+
+% définit une commande pour afficher une question 
+% #1 : question
+% #2 : réponse
+% #3 : nombres de lignes pour répondre
+\newcommand{\question}[3]{
+  \numeroQuestion\!#1
+  
+  % pointille ou correction
+  \ifthenelse {\boolean{modeProf}} { % prof
+    \reponseCorrigee{#2}
+  }{ % eleve
+    \vspace*{8pt}
+    \lignesReponse{#3}
+  }
+}
+
+%
 \newcounter{exercice}
-\newcommand{\exo}[2]{
+\newcommand{\numeroQuestion}{
   \refstepcounter{exercice}
   \vspace*{2pt}
   \hspace{15pt}
-  \textcolor{darkcyan!75!black}{\textbf{\arabic{exercice}} {\small\faMinus}} #1
-  
-  
-  \vspace*{8pt}
-  \reponse{#2}
+  \textcolor{\couleurExercice}{%couleurPrincipale!75!black}{
+    \textbf{\arabic{exercice}} {\small\faMinus}
+  }
 }
-% sous questions
-\newcommand{\sousQuestion}[2]{
-  \hspace{15pt}
-  \textcolor{darkcyan!75!black}{\textbullet} #1
-  
-  \vspace*{8pt}
-  \reponse{#2}
+
+% correction
+\newcommand{\reponseCorrigee}[1]{
+  \vspace*{2pt}
+  \hspace{16pt}
+  \textcolor{\couleurCorrection}{
+    \faCaretRight \hspace{2pt} #1
+  }
 }
-% reponse
+\newcommand{\correction}[1]{
+  \ifthenelse {\boolean{modeProf}} { % prof
+    \textcolor{\couleurCorrection}{#1}
+  }{ % eleve
+  }
+}
+
+% trace des lignes pour répondre
 \newcounter{int}
-\newcommand{\reponse}[1]{
+\newcommand{\lignesReponse}[1]{
   \setcounter{int}{-1}
   \loop
-  \stepcounter{int}
-  \ifnum \value{int} < #1
-  \lignePointillee{0.99} \\[8pt]
+    \stepcounter{int}
+    \ifnum \value{int} < #1
+    \lignePointillee{0.99} \\[8pt]
   \repeat
   \ifnum #1 > 0
     \vspace*{-12pt}
   \fi
 }
 
-
-%%%% correction
-\newcommand{\correction}[1]{
-  \vspace*{-6pt}
-  \hspace{24pt} \fleche \textit{#1}
+% sous questions
+\newcommand{\sousQuestion}[2]{
+  \hspace{15pt}
+  \textcolor{couleurPrincipale!75!black}{\textbullet} #1
+  
   \vspace*{8pt}
+  \reponse{#2}
 }
 
 
-%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% QCM
+% question QCM
+\newcounter{QCM}
+\newcommand{\QCM}[2]{
+  \refstepcounter{QCM}
+  \vspace*{2pt}
+  \textcolor{couleurPrincipale!75!black}{\textbf{\arabic{QCM}} {\small\faMinus}} #1
+  
+  \begin{qcm}
+    #2
+  \end{qcm}
+}
+
+
+%%%% Pour afficher les compétences
 \newcommand{\competence}[1]{
-  {\footnotesize
-    \textit{(#1)}
-  }
+  ~{\footnotesize\textit{(#1)}}
 }
 
 
@@ -225,6 +292,74 @@
   Nom : \lignePointillee{0.3}
   Prénom : \lignePointillee{0.3}
   Classe : \dotfill
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% texte à trou automatique
+\newcommand{\texteTrouAuto}[1]{
+  \gap{
+    \textcolor{couleurPrincipale!60!black}{ \textbf{#1} }
+  }
+}
+
+% texte à trou dans une ligne réglable
+\newcommand{\texteTrou}[2]{
+  \ifthenelse {\boolean{modeProf}} {% prof
+    \textcolor{couleurPrincipale!60!black}{ \textbf{#1} }
+  }{% élève
+    \espaceReponse
+    \lignePointillee{#2}
+  }
+}
+
+% texte à trou sur plusieurs lignes
+\newcommand{\texteTrouLigneComplete}[1]{
+  \ifthenelse {\boolean{modeProf}} {% prof
+    \textcolor{couleurPrincipale!60!black}{ \textbf{#1} }
+  }{% élève
+    \espaceReponse \dotfill
+  }
+}
+
+% texte à trou sur plusieurs lignes
+\newcommand{\texteTrouMultiLignes}[2]{
+  \ifthenelse {\boolean{modeProf}} {% prof
+    \textcolor{couleurPrincipale!60!black}{ \textbf{#1} }
+  }{% élève
+    \reponseLigne
+    \lignesReponse{#2}
+  }
+}
+
+% reponse en fin de ligne
+\newcommand{\reponseLigne}{
+  \espaceReponse
+  \dotfill \\[8pt]
+}
+
+% espace vertical pour la réponse
+\newcommand{\espaceReponse}{
+  \phantom{$\Frac{1}{1}$} % espace vertical
+  \hspace*{-40pt} \phantom{b} % ajuste l'espace horizontal
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%% Pour choisir parmi deux sujets
+\newboolean{sujetA}
+\setboolean{sujetA}{true}
+\newcommand{\sujetB}{
+  \setboolean{sujetA}{false}
+}
+\newcommand{\sujetA}{
+  \setboolean{sujetA}{true}
+}
+
+%%%% Pour faire plusieurs sujets en parallèle
+\newcommand{\variationSujet}[2]{
+  \ifthenelse {\boolean{sujetA}}
+  {\hspace*{-2pt}#1\hspace*{-2pt}}
+  {\hspace*{-2pt}#2\hspace*{-2pt}}
 }
 
 
@@ -250,8 +385,8 @@
 
 %%%% problematique
 \newcommand{\problematique}[1]{
-  \fleche
-  \emphase{Problématique :} 
+  \hspace{8pt}
+  \flecheLongue
   \textbf{#1}
 }
 
@@ -262,10 +397,10 @@
   [boxrule = 0pt,
   frame hidden, sharp corners,
   colback = white, enhanced,
-  borderline north={2pt}{0pt}{darkcyan},
-  borderline south={2pt}{0pt}{darkcyan},
-  borderline west={4pt}{0pt}{darkcyan},
-  borderline east={4pt}{0pt}{darkcyan}
+  borderline north={2pt}{0pt}{couleurPrincipale},
+  borderline south={2pt}{0pt}{couleurPrincipale},
+  borderline west={4pt}{0pt}{couleurPrincipale},
+  borderline east={4pt}{0pt}{couleurPrincipale}
   ]
   
 }
@@ -284,12 +419,28 @@
   \end{objBoite}
 }
 
+%%%% Espace pour un coup de pouce
+\newenvironment{coupDePouce}{
+  \vspace*{-12pt}
+  \begin{boite}
+    \begin{flushright}
+      \textcolor{couleurPrincipale}{\faSquareO}
+    \end{flushright}
+    
+    \vspace*{-30pt}
+    \textcolor{couleurPrincipale}{\faThumbsUp}
+    \textbf{Coup de pouce} :\\[4pt]
+}
+{
+  \end{boite}
+}
+
 
 %%%% Espace pour une appréciation
 \newcommand{\appreciation}[1]{
   \vspace*{8pt}
   \sousTitre{Appréciation et remarques}
-  \vspace*{-4pt}
+  \vspace*{-8pt}
   \begin{boite}
     \vspace{#1 pt}
     \phantom{b}
@@ -317,7 +468,7 @@
 \newenvironment{tableauConnaissances}{
   \centering
   \setlength{\extrarowheight}{6pt}
-  \tabularx{\linewidth}{| X | c | c | m{0.15\linewidth} | m{0.15\linewidth} |}
+  \tabularx{\linewidth}{| X | c | c | m{0.18\linewidth} | m{0.15\linewidth} |}
     \hline
     \rowcolor{gray!20} 
     \textbf{Points clés du chapitre} & \ok & \pasOk & \textbf{En classe} & \textbf{Exercices}
@@ -328,8 +479,23 @@
   \endtabularx
 }
 
+%%%% Tableau de connaissances sans exercices
+\newenvironment{tableauConnaissancesSansExercices}{
+  \centering
+  \setlength{\extrarowheight}{6pt}
+  \tabularx{\linewidth}{| X | c | c | m{0.2\linewidth} |}
+    \hline
+    \rowcolor{gray!20} 
+    \textbf{Points clés du chapitre} & \ok & \pasOk & \textbf{En classe}
+    \\ \hline
+}
+{   
+    \\ \hline
+  \endtabularx
+}
+
 %%%% Tableau de correction élève
-\newcommand{\correctionEleve}{
+\newcommand{\correctionEleve}[1]{
   \setlength{\extrarowheight}{6pt}
   \begin{tabularx}{\linewidth}{| X | m{0.26\textwidth} | m{0.26\textwidth} | m{0.26\textwidth} |}
     \hline
@@ -340,13 +506,13 @@
     \phantom{Bla} \textbf{La correction}
     \\ \hline
     %
-    \phantom{b} \newline
+    \phantom{b} \vspace{#1 pt}
     & & & \\ \hline
-    \phantom{b} \newline
+    \phantom{b} \vspace{#1 pt}
     & & & \\ \hline
-    \phantom{b} \newline
+    \phantom{b} \vspace{#1 pt}
     & & & \\ \hline
-    \phantom{b} \newline
+    \phantom{b} \vspace{#1 pt}
     & & & \\ \hline
   \end{tabularx}
 }
@@ -369,31 +535,36 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% symboles : chevron, flèche, attention, etc.
 \newcommand{\chevron}{
-  \textcolor{darkcyan}{\small \faChevronRight}
+  \textcolor{couleurPrincipale}{\small \faChevronRight}
 }
 %
 \newcommand{\fleche}{
-  \textcolor{darkcyan}{\faCaretRight}
+  \textcolor{couleurPrincipale}{\faCaretRight}
 }
 %
 \newcommand{\attention}{
-  \textcolor{darkcyan}{\faExclamationTriangle}
+  \textcolor{couleurPrincipale}{\faExclamationTriangle}
 }
 %
 \newcommand{\flecheLongue}{
-  \textcolor{darkcyan}{\faLongArrowRight}
+  \textcolor{couleurPrincipale}{\faLongArrowRight}
 }
 %
 \newcommand{\ok}{
-  \textcolor{darkcyan}{\faCheckCircle}
+  \textcolor{couleurPrincipale}{\faCheckCircle}
 }
 %
 \newcommand{\pasOk}{
-  \textcolor{darkcyan}{\faTimesCircle}
+  \textcolor{couleurPrincipale}{\faTimesCircle}
 }
 %
 \newcommand{\pointCyan}{
-  \textcolor{darkcyan}{\textbullet}
+  \textcolor{couleurPrincipale}{\textbullet}
+}
+%
+\newcommand{\mesure}{
+  \hspace{15pt}
+  \textcolor{couleurPrincipale!75!black}{\faWrench\faFlask}
 }
 
 
@@ -403,9 +574,22 @@
   \begin{tcolorbox}
   [boxrule = 0pt,
   frame hidden, sharp corners,
-  colback = white!95!darkcyan, % background color
+  colback = white!95!couleurPrincipale, % background color
   breakable, enhanced jigsaw, % to break box over page
-  borderline west={4pt}{0pt}{darkcyan}] % left bar
+  borderline west={4pt}{0pt}{couleurPrincipale}] % left bar
+  
+}
+{
+  \end{tcolorbox}
+}
+
+%%%% contexte
+\newenvironment{contexte}{
+  \begin{tcolorbox}
+  [boxrule = 4pt, sharp corners,
+  colframe = couleurPrincipale,
+  colback = white!95!couleurPrincipale, % background color
+  breakable, enhanced jigsaw] % to break box over page
   
 }
 {
@@ -415,15 +599,18 @@
 
 %%%% emphase
 \newcommand{\emphase}[1]{
-  \textcolor{darkcyan}{\textsf{\bfseries \large #1}}
+  \textcolor{couleurImportant}{\textsf{\bfseries \large #1}}
 }
 %
 \newcommand{\important}[1]{
-  \!\textcolor{darkgreen}{\textsf{\bfseries #1}}\!\!
+  \!\textcolor{couleurImportant}{\textsf{\bfseries #1}}\!\!
 }
 %
-\newcommand{\exemple}[1]{
-  \flecheLongue \textit{#1}
+\newcommand{\exemple}{
+  \flecheLongue \textit{Exemple :}
+}
+\newcommand{\exemples}{
+  \flecheLongue \textit{Exemples :}
 }
 %
 \newcommand{\note}{
@@ -452,7 +639,12 @@
 
 %%%% liste d'objectif
 \newlist{listeObjectifs}{itemize}{2}
-\setlist[listeObjectifs]{label=\chevron}
+\setlist[listeObjectifs]{label = \chevron}
+
+
+%%%% protocole
+\newlist{protocole}{itemize}{2}
+\setlist[protocole]{label = {\footnotesize \fleche}}
 
 
 %%%% liste de points
@@ -460,9 +652,18 @@
 \setlist[listePoints]{label = \pointCyan}
 
 
-%%%% liste de points
+%%%% jeu de données
+\newenvironment{donnees}{
+  \textbf{Données :}
+  \begin{listePoints}
+}{
+  \end{listePoints}
+}
+
+
+%%%% liste avec chiffre
 \newlist{enumeration}{enumerate}{2}
-\setlist[enumeration]{label = \textcolor{darkcyan!75!black}{\textbf{\arabic*.}} }
+\setlist[enumeration]{label = \textcolor{couleurPrincipale!75!black}{\textbf{\arabic*.}} }
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -485,9 +686,18 @@
   \begin{minipage}[t]{0.48\linewidth}
     #1
   \end{minipage}
-  ~
+  \hfill
   \begin{minipage}[t]{0.48\linewidth}
     #2
+  \end{minipage}
+}
+\newcommand{\separationBlocs}[4]{
+  \begin{minipage}[t]{#1\linewidth}
+    #3
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{#2\linewidth}
+    #4
   \end{minipage}
 }
 
@@ -533,24 +743,24 @@
 \newcommand{\tkzPointLabel}[3]{
   \filldraw (#1, #2) circle (2pt) node[above] {#3};
 }
-\newcommand{\tkzVector}[6]{
+\newcommand{\tkzVecteur}[6]{
   \draw[black, ->, very thick] (#1, #2) -- (#1 + #3, #2 + #4) node[#6] {#5};
 }
-\newcommand{\tkzArrow}[6]{
+\newcommand{\tkzEquiv}[6]{
   \draw[black, <->, thick] (#1, #2) -- (#1 + #3, #2 + #4);
   \draw[black] (#1 + #3/2, #2 + #4/2) node[#6] {#5};
 }
-\newcommand{\tkzVectorX}[4]{
+\newcommand{\tkzVecteurX}[4]{
   \draw[black, ->, very thick] (#1, #2) -- (#1 + #3, #2) node[above] {#4};
 }
-\newcommand{\tkzVectorY}[4]{
+\newcommand{\tkzVecteurY}[4]{
   \draw[black, ->, very thick] (#1, #2) -- (#1, #2 + #3) node[right] {#4};
 }
-\newcommand{\tkzArrowY}[5]{
+\newcommand{\tkzEquivY}[5]{
   \draw[#1, <->, thick] (#2, #3) -- (#2, #3 + #4);
   \draw[#1] (#2, #3 + #4/2) node[right] {#5};
 }
-\newcommand{\tkzArrowX}[5]{
+\newcommand{\tkzEquivX}[5]{
   \draw[#1, <->, thick] (#2, #3) -- (#2 + #4, #3);
   \draw[#1] (#2 + #4/2, #3) node[below] {#5};
 }
@@ -560,7 +770,7 @@
   \filldraw [fill=white, draw=black, ultra thick] (#1, #2) rectangle (#1 + #3, #2 + #4);
   \node at (#1 + #3/2, #2 + #4/2) [font=\sffamily] {\textbf{\large #5}};
 }
-% classe
+% place dans la classe
 \newcommand{\place}[3]{
   \rectangleTexte{#1}{#2}{3}{2}{#3}
 }
@@ -579,24 +789,42 @@
   \place{#1 + 6}{#2}{#5}
   \place{#1 + 9}{#2}{#6}
 }
-\newcommand{\rangDeuxTrois}[9]{
-  \deuxPlaces {#1}{#2}     {#3}{#4}
-  \troisPlaces{#1 + 7}{#2} {#5}{#6}{#7}
-  \deuxPlaces {#1 + 17}{#2}{#8}{#9}
+%%%% rangée
+\newboolean{quatrePlace}
+\setboolean{quatrePlace}{false}
+\newcommand{\avecQuatrePlaces}{ \setboolean{quatrePlace}{true} }
+\newcommand{\avecTroisPlaces}{ \setboolean{quatrePlace}{false} }
+\newcommand{\rangee}[9]{
+  \ifthenelse {\boolean{quatrePlace}} {
+    \deuxPlaces  {0}{#1} {#2}{#3}
+    \quatrePlaces{7}{#1} {#4}{#5}{#6}{#7}
+    \deuxPlaces  {20}{#1}{#8}{#9}
+  }{
+    \deuxPlaces {#1}{#2}     {#3}{#4}
+    \troisPlaces{#1 + 7}{#2} {#5}{#6}{#7}
+    \deuxPlaces {#1 + 17}{#2}{#8}{#9}
+  }
 }
-\newcommand{\rangDeuxQuatre}[9]{
-  \deuxPlaces  {0}{#1} {#2}{#3}
-  \quatrePlaces{7}{#1} {#4}{#5}{#6}{#7}
-  \deuxPlaces  {20}{#1}{#8}{#9}
+\newcommand{\rang}[9]{
+  \ifthenelse {\boolean{quatrePlace}} {
+    \deuxPlaces  {0} {12 - 3*#1} {#2}{#3}
+    \quatrePlaces{7} {12 - 3*#1} {#4}{#5}{#6}{#7}
+    \deuxPlaces  {20}{12 - 3*#1} {#8}{#9}
+  }{
+    \deuxPlaces {0} {12 - 3*#1} {#2}{#3}
+    \troisPlaces{7} {12 - 3*#1} {#4}{#5}{#6}
+    \deuxPlaces {17}{12 - 3*#1} {#7}{#8}
+  }
 }
-% TP
+
+%%%% TP
 \newcommand{\paillasse}[3]{
   \rectangleTexte{#1}{#2}{4}{2}{#3}
 }
-\newcommand{\rangPaillasse}[6]{
+\newcommand{\rangeeTP}[6]{
   \paillasse{#1}{#2}     {#3}
   \paillasse{#1 + 4}{#2} {#4}
-  \paillasse{#1 + 12}{#2} {#5}
+  \paillasse{#1 + 12}{#2}{#5}
   \paillasse{#1 + 16}{#2}{#6}
 }
 
@@ -612,15 +840,30 @@
 \newcommand{\degree}{
   ^\circ\!
 }
+\newcommand{\degreCelsius}{
+  \degree\, \mathrm{C}
+}
 \newcommand{\Frac}[2]{
   \displaystyle \frac{#1}{#2}
 }
-\newcommand{\Tfus}{
-  T_{\text{f}}
+\newcommand{\algebrique}[1]{
+  \overline{\mathrm{#1}}
 }
-\newcommand{\Teb}{
-  T_{\text{éb}}
+\newcommand{\reaction}{
+  \!\!\schemestart \arrow(.mid east--.mid west){->}[, 0.9, ultra thick] \schemestop\!\!
 }
+%% grandeurs
+\newcommand{\gISS}{g_\text{ISS}}
+\newcommand{\MTerre}{M_\text{Terre}}
+\newcommand{\RTerre}{R_\text{Terre}}
+\newcommand{\inertie}{\text{inertie}}
+\newcommand{\Tfus}{ T_{\text{f}} }
+\newcommand{\Teb}{ T_{\text{éb}} }
+\newcommand{\avogadro}{6,\!02 \times 10^{23}}
+\newcommand{\saccha}{Saccharose (\chemfig{C_{12} H_{22} O_{11}})}
+\newcommand{\vitamC}{Vitamine C (\chemfig{C_{6} H_{8} O_{6}})}
+\newcommand{\ionsCa}{Ion calcium (\chemfig{Ca^{2+}})}
+%% vecteurs
 \newcommand{\FBsurA}{
   F_{B/A}
 }
@@ -632,6 +875,47 @@
 }
 \newcommand{\vvFBsurA}{
   \vv{F}_{B/A}
+}
+
+%% atome et isotope
+\makeatletter
+\newcommand{\isotope}[3]{%
+   \settowidth\@tempdimb{\ensuremath{\scriptstyle#1}}%
+   \settowidth\@tempdimc{\ensuremath{\scriptstyle#2}}%
+   \ifnum\@tempdimb>\@tempdimc%
+       \setlength{\@tempdima}{\@tempdimb}%
+   \else%
+       \setlength{\@tempdima}{\@tempdimc}%
+   \fi%
+  \begingroup%
+  \ensuremath{
+    ^{\makebox[\@tempdima][r]{\ensuremath{\scriptstyle#1}}}
+    _{\makebox[\@tempdima][r]{\ensuremath{\scriptstyle#2}}}
+    \chemfig{#3}
+  }%
+  \endgroup%
+}%
+\makeatother
+%% element chimique
+\makeatletter
+\newcommand{\element}[2]{%
+   \settowidth\@tempdimb{\ensuremath{\footnotesize #1}}%
+  \begingroup%
+  \ensuremath{
+    _{\makebox[\@tempdimb][r]{\ensuremath{\small #1}}} 
+    \chemfig[atom style={scale=1.3}]{#2}
+  }%
+  \endgroup%
+}%
+\makeatother
+
+%% siècle
+\newcommand{\siecle}[1]{
+  \textsc{\romannumeral #1}\textsuperscript{e}~siècle
+}
+%% texte avec une boite autour
+\newcommand{\texteEncadre}[1]{
+  \frame{\vphantom{$\Frac{1}{10}$} \text{ #1 } }
 }
 
 
@@ -661,3 +945,6 @@
     tabsize=2
 }
 \def\inline{\lstinline[style=codePython,language=python]}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
