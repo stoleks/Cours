@@ -61,7 +61,19 @@ def traceWien ():
     plt.savefig ('loi_wien.png', dpi=300, transparent=True)
     plt.show ()
     
+def traceChauffage ():
+    lambd = np.linspace (0.1, 20, 200)
+    plt.xlim ((0, 20))
+    temperature = np.linspace (300, 700, 10)
+    for T in temperature:
+        plt.plot (lambd, luminance (lambd, T), lw=5)
+
+    plt.xlabel ("$\lambda$ ($\mu$m)")
+    plt.ylabel ("Flux lumineux")
+    plt.plot ()
     
-traceCorpsChaud()
-traceCorpsChaudT3000()
-traceWien()
+    
+# traceCorpsChaud()
+# traceCorpsChaudT3000()
+# traceWien()
+traceChauffage ()
