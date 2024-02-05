@@ -64,12 +64,13 @@ def traceWien ():
 def traceChauffage ():
     lambd = np.linspace (0.1, 20, 200)
     plt.xlim ((0, 20))
-    temperature = np.linspace (300, 700, 10)
+    temperature = np.linspace (20, 400, 11)
     for T in temperature:
-        plt.plot (lambd, luminance (lambd, T), lw=5)
+        plt.plot (lambd, luminance (lambd, T+273), lw=5, label='T = ' + str(T) + '°C')
 
     plt.xlabel ("$\lambda$ ($\mu$m)")
     plt.ylabel ("Flux lumineux")
+    plt.legend ()
     plt.plot ()
     
     
