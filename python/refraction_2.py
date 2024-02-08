@@ -31,20 +31,20 @@ for i in range (len (i1)):
 params, covar = curve_fit (lineaire, sini1, sini2)
 modele=[]
 
-# On ajoute 0 et 2 pour que le modele aille plus loin que les points experimentaux
+# On ajoute 1 pour que le modele aille plus loin que les points experimentaux
 x = sini1 + [1]
 for val in x:
   modele.append (lineaire (val, *params))
 
 # Trace les donnees et le modele lineaire
-plt.plot (x, modele, label ="modele $\sin (i_2) =$ {:.2f} $\sin (i_1)$".format(*params), color = "green")
+plt.plot (x, modele, label ="$\sin (i_2) =$ {:.2f} $\sin (i_1)$".format(*params), color = "green")
 plt.plot (sini1, sini2, "+", markersize = 15., markeredgewidth = 2., label="Points experimentaux", color = "red")
 
 # Titre axes et legende du graphique
 plt.legend()
 plt.title ("Refraction")
-plt.xlabel ("Angle d'incidence $\sin (i_1)$")
-plt.ylabel ("Angle de refraction $\sin (i_2)$")
+plt.xlabel ("$\sin (i_1)$")
+plt.ylabel ("$\sin (i_2)$")
 plt.grid ()
 
 # Affiche le graphique
