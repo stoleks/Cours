@@ -18,7 +18,7 @@ def lineaire (x,a):
 
 # donnees mesurees
 i1 = [0, 5]
-i2 = []
+i2 = [1, 2]
 sini1 = []
 sini2 = []
 
@@ -34,7 +34,7 @@ modele=[]
 x = sini1 + [1]
 for val in x:
   modele.append (lineaire (val, *params))
-  
+
 # Trace les donnees et le modele lineaire
 plt.plot (x, modele, label ="$\sin (i_2) =$ {:.2f} $\sin (i_1)$".format(*params), color = "green")
 plt.plot (sini1, sini2, "+", markersize = 15., markeredgewidth = 2., label="Points experimentaux", color = "red")

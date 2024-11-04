@@ -8,7 +8,7 @@ def enRadian (angle):
     return angle * np.pi / 180
 
 # Formule B1 de https://emtoolbox.nist.gov/Wavelength/Documentation.asp#AppendixA
-# T en °C, P en kPa, RH (humidité) en % 
+# T en °C, P en kPa, RH (humidité) en %
 def indiceRefraction (p, T, RH = 50):
     return 1 + 7.86 * 10**(-4) * p / (273 + T) - 1.5 * 10**(-11) * RH * (T**2 + 160)
 
@@ -60,7 +60,7 @@ def trajetRayonLumineux (x0, z0, zMax, theta, gradient, couches = 200, color = "
             z0 = z1 - dz # on repart à la hauteur précédente
         else:
             r =  np.arcsin ((n1/n2) * np.sin (i)) # loi de Snell-Descartes
-            z0 = z2 
+            z0 = z2
             hauteurs.append (z0)
         theta = np.pi/2 - r
         # calcul de la trajectoire du rayon
@@ -76,17 +76,17 @@ def trajetRayonLumineux (x0, z0, zMax, theta, gradient, couches = 200, color = "
     # affiche les couches d'air
     if (couches < 50):
         plt.hlines (hauteurs, 0, x0, linestyles='--', colors='grey', lw = 1)
-    
+
 # Initialisation de la position et de l'angle à l'horizontale du rayon
 x0 = 0
 z0 = 0
 zMax = 25
-couches = 5
+couches = 100
 plt.xlabel ("Distance avec l'objet [m]")
 plt.ylabel ("Hauteur dans l'atmosphère [m]")
 trajetRayonLumineux(x0, z0, zMax, enRadian (2), 2, couches) # le gradient est sévère pour illustrer
 plt.ylim (0, 75)
-
+plt.show()
 
 # for t in np.linspace (15, 40, 10):
 #     x0 = 0
