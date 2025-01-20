@@ -27,8 +27,8 @@ plt.title ("Trajectoire de la balle") # titre du graphique
 # tracé des points repérés et des vecteur vitesses
 plt.plot (x, y, "o", markersize = 5) # affiche des points rond ('o'), taille 4
 plt.xlim (0, 5.0)                    # limite du graphique selon x
-plt.ylim (0, 1.6)                    # limite du graphique selon y
-plt.xticks (np.arange(0, 5, 0.5))    # finesse de la grille selon x
-plt.yticks (np.arange(0, 1.6, 0.2))  # finesse de la grille selon y
+plt.ylim (0, 2.4)                    # limite du graphique selon y
+plt.xticks (np.arange(0, 5.0, 0.5))  # finesse de la grille selon x
+plt.yticks (np.arange(0, 2.4, 0.2))  # finesse de la grille selon y
 plt.grid ()                          # affichage de la grille
 plt.show ()                          # affichage du graphique
