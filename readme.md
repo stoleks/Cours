@@ -1,6 +1,6 @@
 # Cours 
 
-Dossier contenant toutes mes fiches d'activités pour mes cours de physique-chimie au lycée.
+Dossier contenant toutes mes fiches d'activités pour mes cours de physique-chimie au lycée au format .pdf prêt à imprimer.
 Actuellement trois niveaux existent : seconde générales et technologiques (GT), première sciences et technologies de la santé et du social (ST2S) et terminale ST2S.
 
 
@@ -21,6 +21,8 @@ Les fichiers sont organisés par dossiers :
 - *seconde* contient toutes les fiches d'activités pour les secondes GT.
 - *stssPremiere* contient toutes les fiches d'activités pour les premières ST2S.
 - *stssTerminale* contient toutes les fiches d'activités pour les terminales ST2S.
+
+Note : les chapitres ne sont pas numérotés, car parfois je fais voter aux élèves l'ordre des chapitres.
 
 
 ## Contact
