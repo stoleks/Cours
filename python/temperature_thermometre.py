@@ -7,8 +7,8 @@ from scipy.optimize import curve_fit
 def lineaire (x, a, b):
     return a*x + b
 
-T = [32.0, 34.5, 37.0, 39.5, 42.0]
-U = [512, 1120, 1635, 2055, 2430]
+T = [31.1, 32.0, 32.8, 34.5, 36.1, 37.0, 38.4, 39.5, 42.0, 42.7]
+U = [420, 512, 750, 1120, 1387, 1635, 1830, 2055, 2430, 2650]
 Unorm = []
 for tension in U:
     Unorm.append (tension / 2)
