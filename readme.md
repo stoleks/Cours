@@ -22,7 +22,9 @@ Les fichiers sont organisés par dossiers :
 - *stssPremiere* contient toutes les fiches d'activités pour les premières ST2S.
 - *stssTerminale* contient toutes les fiches d'activités pour les terminales ST2S.
 
-Note : les chapitres ne sont pas numérotés, car parfois je fais voter aux élèves l'ordre des chapitres.
+Notes : les chapitres ne sont pas numérotés, car parfois je fais voter aux élèves l'ordre des chapitres.
+Tous les fichiers sont générés à partir de mes fichiers .tex, qui sont sur [ce dépôt](https://forge.apps.education.fr/jedrecyalexandre/LaTex_physique-chimie_lycee_GT).
+La procédure de génération des .pdf est détaillée sur le dépôt qui contient les fichiers tex.
 
 
 ## Contact
