@@ -6,16 +6,15 @@ Actuellement trois niveaux existent : seconde générales et technologiques (GT)
 
 ## Licence 
 
-Tous les fichiers sont de moi et sont mis à disposition sous [licence creative common (CC-BY-4.0)](https://creativecommons.org/licenses/by/4.0/), sauf mention explicite du contraire. Vous pouvez donc les utiliser comme vous voulez en créditant leur origine.
+Tous les fichiers sont de moi et sont mis à disposition sous [licence creative common (CC-BY-4.0)](https://creativecommons.org/licenses/by/4.0/), sauf mention explicite du contraire. Vous pouvez donc les utiliser comme vous voulez en créditant leur origine (ou pas, honnêtement je m'en fiche).
 
 
 ## Organisation des fichiers
 
 Les fichiers sont organisés par dossiers :
 
-- *accompagnementPersonnel* contient des activités pour de l'accompagnement personnel niveau seconde GT.
-- *archives* contient les cours des années précédentes (je pense l'enlever à un moment).
-- *images* contient toutes les images utilisées dans les activités, avec les fichiers modifiables (j'utilise blender).
+- *accompagnementPersonnel* contient des activités pour de l'accompagnement personnel (AP) niveau seconde GT et sont issues d'un cadre collectif l'année ou j'avais 2h d'AP.
+- *images* contient toutes les images utilisées dans les activités, avec les fichiers modifiables (j'utilise blender principalement), le dossier contient un README.md plus détaillé.
 - *python* contient des scripts python utilisé dans certaines activités.
 - *fichesTP* contient des fiches avec la liste du matériel utilisé pour certains TP.
 - *seconde* contient toutes les fiches d'activités pour les secondes GT.
